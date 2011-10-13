@@ -25,7 +25,7 @@ module MyApp
 end
 ```
 
-By default, Silencer's logger will serve as a drop-in replacement for Rails default logger, but you can also send it a 'X-SILENCE-LOGGER' header (with any value) and that will also produce the same behavior.
+Silencer's logger will serve as a drop-in replacement for Rails default logger.  It will not suppress any logging by default, simply pass it an array of urls via the options hash.  You can also send it a 'X-SILENCE-LOGGER' header (with any value) with your request and that will also produce the same behavior.
 
 Note on Patches/Pull Requests
 -----------------------------
