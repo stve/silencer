@@ -8,7 +8,7 @@ Installation
 
 Just add silencer to your Gemfile:
 
-gem 'silencer'
+    gem 'silencer'
 
 Usage
 -----
