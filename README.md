@@ -18,11 +18,7 @@ In your production environment (presumably):
 ```ruby
 require 'silencer/logger'
 
-module MyApp
-  class Application < Rails::Application
-    config.middleware.swap Rails::Rack::Logger, Silencer::Logger, :silence => ["/noisy/action.json"]
-  end
-end
+config.middleware.swap Rails::Rack::Logger, Silencer::Logger, :silence => ["/noisy/action.json"]
 ```
 
 Silencer's logger will serve as a drop-in replacement for Rails default logger.  It will not suppress any logging by default, simply pass it an array of urls via the options hash.  You can also send it a 'X-SILENCE-LOGGER' header (with any value) with your request and that will also produce the same behavior.
