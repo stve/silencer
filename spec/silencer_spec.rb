@@ -21,6 +21,13 @@ describe Silencer::Logger do
     Silencer::Logger.new(@app, :silence => ['/']).call(Rack::MockRequest.env_for("/"))
   end
 
+  it 'quiets the log when configured with a regex' do
+    Rails.logger.should_receive(:silence)
+    Rails.logger.should_not_receive(:info)
+
+    Silencer::Logger.new(@app, :silence => [/assets/]).call(Rack::MockRequest.env_for("/assets/application.css"))
+  end
+
   it 'quiets the log when passed a custom header "X-SILENCE-LOGGER"' do
     Rails.logger.should_receive(:silence)
     Rails.logger.should_not_receive(:info)
