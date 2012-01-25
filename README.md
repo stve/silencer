@@ -15,13 +15,17 @@ Usage
 
 In your production environment (presumably):
 
-```ruby
-require 'silencer/logger'
 
-config.middleware.swap Rails::Rack::Logger, Silencer::Logger, :silence => ["/noisy/action.json"]
-```
+    require 'silencer/logger'
 
-Silencer's logger will serve as a drop-in replacement for Rails default logger.  It will not suppress any logging by default, simply pass it an array of urls via the options hash.  You can also send it a 'X-SILENCE-LOGGER' header (with any value) with your request and that will also produce the same behavior.
+    config.middleware.swap Rails::Rack::Logger, Silencer::Logger, :silence => ["/noisy/action.json"]
+
+Or if you'd prefer, you can pass it regular expressions:
+
+
+    config.middleware.swap Rails::Rack::Logger, Silencer::Logger, :silence => [/assets/]
+
+Silencer's logger will serve as a drop-in replacement for Rails' default logger.  It will not suppress any logging by default, simply pass it an array of urls via the options hash.  You can also send it a 'X-SILENCE-LOGGER' header (with any value) with your request and that will also produce the same behavior.
 
 Note on Patches/Pull Requests
 -----------------------------
@@ -37,4 +41,4 @@ Note on Patches/Pull Requests
 Copyright
 ---------
 
-Copyright (c) 2011 Steve Agalloco. See LICENSE for details.
+Copyright (c) 2012 Steve Agalloco. See [LICENSE](https://github.com/spagalloco/silencer/blob/master/LICENSE.md) for details.
