@@ -9,17 +9,31 @@ module Silencer
     end
 
     def call(env)
-      silence_request = env['X-SILENCE-LOGGER']
-      silence_request ||= @opts[:silence].include?(env['PATH_INFO'])
-      silence_request ||= @opts[:silence].select {|s| s.kind_of?(Regexp) }.any? { |s| s =~ env['PATH_INFO']}
-
-      if silence_request
+      if silence_request?(env)
         Rails.logger.silence do
           @app.call(env)
         end
       else
         super(env)
       end
+    end
+
+    private
+
+    def silence_request?(env)
+      silent_header?(env) || silent_request_path?(env) || silent_request_match?(env)
+    end
+
+    def silent_header?(env)
+      env['X-SILENCE-LOGGER']
+    end
+
+    def silent_request_path?(env)
+      @opts[:silence].include?(env['PATH_INFO'])
+    end
+
+    def silent_request_match?(env)
+      @opts[:silence].select {|s| s.kind_of?(Regexp) }.any? { |s| s =~ env['PATH_INFO']}
     end
   end
 end
