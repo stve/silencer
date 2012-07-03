@@ -9,13 +9,13 @@ module Silencer
     end
 
     def call(env)
-      if silence_request?(env)
-        Rails.logger.silence do
-          @app.call(env)
-        end
-      else
-        super(env)
-      end
+      old_logger_level = Rails.logger.level
+      Rails.logger.level = ::Logger::ERROR if silence_request?(env)
+
+      @app.call(env)
+    ensure
+      # Return back to previous logging level
+      Rails.logger.level = old_logger_level
     end
 
     private
@@ -33,7 +33,7 @@ module Silencer
     end
 
     def silent_request_match?(env)
-      @opts[:silence].select {|s| s.kind_of?(Regexp) }.any? { |s| s =~ env['PATH_INFO']}
+      @opts[:silence].select { |s| s.kind_of?(Regexp) }.any? { |s| s =~ env['PATH_INFO'] }
     end
   end
 end
