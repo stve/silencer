@@ -9,7 +9,7 @@ module Silencer
     end
 
     def call(env)
-      old_logger_level = Rails.logger.level
+      old_logger_level   = Rails.logger.level
       Rails.logger.level = ::Logger::ERROR if silence_request?(env)
 
       super
@@ -21,7 +21,7 @@ module Silencer
     private
 
     def silence_request?(env)
-      env['X-SILENCE-LOGGER'] || @silence.any?{ |s| s === env['PATH_INFO'] }
+      env['X-SILENCE-LOGGER'] || @silence.any? { |s| s === env['PATH_INFO'] }
     end
   end
 end
