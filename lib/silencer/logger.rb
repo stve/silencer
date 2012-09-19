@@ -12,7 +12,7 @@ module Silencer
       old_logger_level = Rails.logger.level
       Rails.logger.level = ::Logger::ERROR if silence_request?(env)
 
-      @app.call(env)
+      super
     ensure
       # Return back to previous logging level
       Rails.logger.level = old_logger_level
