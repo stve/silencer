@@ -18,12 +18,12 @@ In your production environment (presumably):
 
     require 'silencer/logger'
 
-    config.middleware.swap Rails::Rack::Logger, Silencer::Logger, :silence => ["/noisy/action.json"]
+    config.middleware.swap Rails::Rack::Logger, Silencer::Logger, nil, :silence => ["/noisy/action.json"]
 
 Or if you'd prefer, you can pass it regular expressions:
 
 
-    config.middleware.swap Rails::Rack::Logger, Silencer::Logger, :silence => [/assets/]
+    config.middleware.swap Rails::Rack::Logger, Silencer::Logger, nil, :silence => [/assets/]
 
 Silencer's logger will serve as a drop-in replacement for Rails' default logger.  It will not suppress any logging by default, simply pass it an array of urls via the options hash.  You can also send it a 'X-SILENCE-LOGGER' header (with any value) with your request and that will also produce the same behavior.
 
