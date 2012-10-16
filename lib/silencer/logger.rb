@@ -3,8 +3,10 @@ require 'active_support/core_ext/array/wrap'
 
 module Silencer
   class Logger < Rails::Rack::Logger
-    def initialize(app, opts = {})
+    def initialize(app, *taggers)
       @app = app
+      @taggers = taggers
+      opts = @taggers.extract_options!
       @silence = Array.wrap(opts[:silence])
     end
 
