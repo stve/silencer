@@ -23,7 +23,7 @@ In your production environment (presumably):
 Or if you'd prefer, you can pass it regular expressions:
 
 
-    config.middleware.swap Rails::Rack::Logger, Silencer::Logger, :silence => [/assets/]
+    config.middleware.swap Rails::Rack::Logger, Silencer::Logger, :silence => [%r{^/assets/}]
 
 Silencer's logger will serve as a drop-in replacement for Rails' default logger.  It will not suppress any logging by default, simply pass it an array of urls via the options hash.  You can also send it a 'X-SILENCE-LOGGER' header (with any value) with your request and that will also produce the same behavior.
 
@@ -31,7 +31,7 @@ Silencer's logger will serve as a drop-in replacement for Rails' default logger.
 
 Rails 2.3.x introduced a tagged logging feature.  If you are using tagged logging with Rails 2.3 you can also pass taggers via the middleware:
 
-    config.middleware.swap Rails::Rack::Logger, Silencer::Logger, config.log_tags, :silence => [/assets/]
+    config.middleware.swap Rails::Rack::Logger, Silencer::Logger, config.log_tags, :silence => [%r{^/assets/}]
 
 ## Note on Patches/Pull Requests
 
