@@ -5,8 +5,8 @@ module Silencer
   class Logger < Rails::Rack::Logger
     def initialize(app, *taggers)
       @app = app
-      @taggers = taggers
-      opts = @taggers.extract_options!
+      opts = taggers.extract_options!
+      @taggers = taggers.flatten
       @silence = Array.wrap(opts[:silence])
     end
 
