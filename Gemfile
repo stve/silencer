@@ -1,10 +1,13 @@
 source 'http://rubygems.org'
 
+group :development do
+  gem 'yard'
+  gem 'kramdown'
+end
+
 group :test do
   gem 'rake'
   gem 'rspec'
-  gem 'yard'
-  gem 'kramdown'
   gem 'simplecov'
   gem 'guard'
   gem 'guard-rspec'
