@@ -10,14 +10,6 @@ Gem::Specification.new do |gem|
   gem.description   = 'Selectively quiet your Rails logger on a per-action basis'
   gem.summary       = gem.description
 
-  gem.add_development_dependency 'rake'
-  gem.add_development_dependency 'rspec'
-  gem.add_development_dependency 'yard'
-  gem.add_development_dependency 'kramdown'
-  gem.add_development_dependency 'simplecov'
-  gem.add_development_dependency 'guard'
-  gem.add_development_dependency 'guard-rspec'
-
   gem.add_dependency 'railties', '>= 3'
 
   gem.files         = `git ls-files`.split("\n")
