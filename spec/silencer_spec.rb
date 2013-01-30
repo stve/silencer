@@ -11,33 +11,47 @@ describe Silencer::Logger do
     end
   end
 
-  it 'allows log writing when not implemented' do
+  def should_silence_logger
+    Rails.logger.should_receive(:level=).with(::Logger::ERROR).once
+  end
+  def should_not_silence_logger
     Rails.logger.should_not_receive(:level=).with(::Logger::ERROR)
-
-    Silencer::Logger.new(@app).call(Rack::MockRequest.env_for("/"))
   end
 
-  it 'instantiates with an optional taggers array' do
-    Rails.logger.should_not_receive(:level=).with(::Logger::ERROR).once
+  it 'by default does not silence any requests or use any taggers' do
+    should_not_silence_logger
+    logger = Silencer::Logger.new(@app)
+    logger.instance_variable_get(:@taggers).should == []
+    logger.call(Rack::MockRequest.env_for("/"))
+  end
 
-    Silencer::Logger.new(@app, :uuid, :queue, :silence => ['/']).call(Rack::MockRequest.env_for("/"))
+  let(:log_tags) { [:uuid, :queue] }
+  it 'instantiates with an optional taggers array' do
+    should_silence_logger
+    logger = Silencer::Logger.new(@app, log_tags, :silence => ['/'])
+    logger.instance_variable_get(:@taggers).should == log_tags
+    logger.call(Rack::MockRequest.env_for("/"))
+  end
+
+  it 'instantiates with an optional taggers array (using a splat)' do
+    should_silence_logger
+    logger = Silencer::Logger.new(@app, *log_tags, :silence => ['/'])
+    logger.instance_variable_get(:@taggers).should == log_tags
+    logger.call(Rack::MockRequest.env_for("/"))
   end
 
   it 'quiets the log when configured with a silenced path' do
-    Rails.logger.should_receive(:level=).with(::Logger::ERROR).once
-
+    should_silence_logger
     Silencer::Logger.new(@app, :silence => ['/']).call(Rack::MockRequest.env_for("/"))
   end
 
   it 'quiets the log when configured with a regex' do
-    Rails.logger.should_receive(:level=).with(::Logger::ERROR).once
-
+    should_silence_logger
     Silencer::Logger.new(@app, :silence => [/assets/]).call(Rack::MockRequest.env_for("/assets/application.css"))
   end
 
   it 'quiets the log when passed a custom header "X-SILENCE-LOGGER"' do
-    Rails.logger.should_receive(:level=).with(::Logger::ERROR).once
-
+    should_silence_logger
     Silencer::Logger.new(@app).call(Rack::MockRequest.env_for("/", 'X-SILENCE-LOGGER' => 'true'))
   end
 
