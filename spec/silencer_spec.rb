@@ -33,9 +33,10 @@ describe Silencer::Logger do
     logger.call(Rack::MockRequest.env_for("/"))
   end
 
-  it 'instantiates with an optional taggers array (using a splat)' do
+  # Note: initially this test used a splat on log_tags but it fails on 1.8
+  it 'instantiates with an optional taggers array passed as args' do
     should_silence_logger
-    logger = Silencer::Logger.new(@app, *log_tags, :silence => ['/'])
+    logger = Silencer::Logger.new(@app, :uuid, :queue, :silence => ['/'])
     logger.instance_variable_get(:@taggers).should == log_tags
     logger.call(Rack::MockRequest.env_for("/"))
   end
