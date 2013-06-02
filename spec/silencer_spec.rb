@@ -53,11 +53,11 @@ describe Silencer::Logger do
 
   it 'quiets the log when passed a custom header "X-SILENCE-LOGGER"' do
     should_silence_logger
-    Silencer::Logger.new(@app).call(Rack::MockRequest.env_for("/", 'X-SILENCE-LOGGER' => 'true'))
+    Silencer::Logger.new(@app).call(Rack::MockRequest.env_for("/", 'HTTP_X_SILENCE_LOGGER' => 'true'))
   end
 
   it 'does not tamper with the response' do
-    response = Silencer::Logger.new(@app).call(Rack::MockRequest.env_for("/", 'X-SILENCE-LOGGER' => 'true'))
+    response = Silencer::Logger.new(@app).call(Rack::MockRequest.env_for("/", 'HTTP_X_SILENCE_LOGGER' => 'true'))
     response[0].should eq(200)
   end
 end

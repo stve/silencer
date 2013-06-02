@@ -23,7 +23,7 @@ module Silencer
     private
 
     def silence_request?(env)
-      env['X-SILENCE-LOGGER'] || @silence.any? { |s| s === env['PATH_INFO'] }
+      env['HTTP_X_SILENCE_LOGGER'] || @silence.any? { |s| s === env['PATH_INFO'] }
     end
   end
 end
