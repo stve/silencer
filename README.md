@@ -5,6 +5,8 @@
 
 Silencer is a simple rack-middleware for Rails that can selectively disable logging on per-action basis.  It's based on a [blog post](http://dennisreimann.de/blog/silencing-the-rails-log-on-a-per-action-basis/) by Dennis Reimann.
 
+__Note__: Silencer is not thread safe.
+
 ## Installation
 
 Just add silencer to your Gemfile:
