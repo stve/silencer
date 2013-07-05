@@ -1,5 +1,4 @@
 require 'rails/rack/logger'
-require 'active_support/core_ext/array/wrap'
 
 module Silencer
   class Logger < Rails::Rack::Logger
@@ -7,7 +6,7 @@ module Silencer
       @app = app
       opts = taggers.extract_options!
       @taggers = taggers.flatten
-      @silence = Array.wrap(opts[:silence])
+      @silence = wrap(opts[:silence])
     end
 
     def call(env)
@@ -24,6 +23,16 @@ module Silencer
 
     def silence_request?(env)
       env['HTTP_X_SILENCE_LOGGER'] || @silence.any? { |s| s === env['PATH_INFO'] }
+    end
+
+    def wrap(object)
+      if object.nil?
+        []
+      elsif object.respond_to?(:to_ary)
+        object.to_ary || [object]
+      else
+        [object]
+      end
     end
   end
 end
