@@ -3,10 +3,11 @@ require 'rails/rack/logger'
 module Silencer
   class Logger < Rails::Rack::Logger
     def initialize(app, *taggers)
-      @app = app
       opts = taggers.extract_options!
       @taggers = taggers.flatten
       @silence = wrap(opts[:silence])
+
+      super app, @taggers
     end
 
     def call(env)
