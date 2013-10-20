@@ -16,7 +16,7 @@ module Silencer
         opts     = extract_options!(args)
         @silence = wrap(opts.delete(:silence))
 
-        super(app, args.flatten)
+        super(app, normalize(args.flatten))
       end
 
       def call(env)
@@ -27,6 +27,16 @@ module Silencer
       ensure
         # Return back to previous logging level
         ::Rails.logger.level = old_logger_level
+      end
+
+      private
+
+      def normalize(args)
+        args = case args.size
+        when 0 then nil
+        when 1 then args.shift
+        else args
+        end
       end
     end
   end

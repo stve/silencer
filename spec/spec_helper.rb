@@ -8,8 +8,6 @@ unless ENV['CI']
 end
 
 require 'rack'
-require 'rails'
-require 'silencer'
 require 'rspec'
 
 require 'logger'
@@ -17,13 +15,25 @@ require 'stringio'
 
 io = StringIO.new
 
+begin
+  require 'rails'
+  ::Rails.logger = ::Logger.new(io)
+rescue LoadError
+  require 'activesupport'
+  RAILS_ENV            = 'test'
+  RAILS_ROOT           = File.dirname(__FILE__)
+  RAILS_DEFAULT_LOGGER = ::Logger.new(io)
+  require 'initializer'
+end
+
+require 'silencer'
+
 RSpec.configure do |config|
   config.expect_with :rspec do |c|
     c.syntax = :expect
   end
 
   config.before(:each) do
-    ::Rails.logger = ::Logger.new(io)
     allow(::Rails.logger).to receive(:level=).with(anything)
   end
 
