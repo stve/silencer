@@ -41,7 +41,7 @@ describe Silencer::Rails::Logger do
 
     Silencer::Rails::Logger.new(app, log_tags, :silence => ['/']).
       call(Rack::MockRequest.env_for("/"))
-  end unless Silencer::Environment.rails2?
+  end if Silencer::Environment.tagged_logger?
 
   it 'instantiates with an optional taggers array passed as args' do
     expect(::Rails.logger).to receive(:level=).
@@ -49,6 +49,6 @@ describe Silencer::Rails::Logger do
 
     Silencer::Rails::Logger.new(app, :uuid, :queue, :silence => ['/']).
       call(Rack::MockRequest.env_for("/"))
-  end unless Silencer::Environment.rails2?
+  end if Silencer::Environment.tagged_logger?
 
 end
