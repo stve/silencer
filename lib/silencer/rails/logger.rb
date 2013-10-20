@@ -16,7 +16,11 @@ module Silencer
         opts     = extract_options!(args)
         @silence = wrap(opts.delete(:silence))
 
-        super(app, normalize(args.flatten))
+        if normalized_args = normalize(args.flatten)
+          super(app, normalized_args)
+        else
+          super(app)
+        end
       end
 
       def call(env)
