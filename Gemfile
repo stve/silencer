@@ -3,6 +3,9 @@ source 'http://rubygems.org'
 gem 'rake'
 gem 'yard'
 
+gem 'rails', (ENV['RAILS_VERSION'] || '4.0.0')
+gem 'rack'
+
 group :development do
   gem 'kramdown'
   gem 'guard-rspec'

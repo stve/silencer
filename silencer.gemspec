@@ -9,13 +9,13 @@ Gem::Specification.new do |gem|
   gem.authors       = ["Steve Agalloco"]
   gem.email         = ["steve.agalloco@gmail.com"]
   gem.homepage      = "http://github.com/spagalloco/silencer"
-  gem.description   = 'Selectively quiet your Rails logger on a per-action basis'
+  gem.description   = 'Selectively quiet your Rails/Rack logger on a per-route basis'
   gem.summary       = gem.description
 
-  gem.add_dependency 'railties', '>= 3'
+  gem.files = %w(.yardopts LICENSE.md README.md Rakefile silencer.gemspec)
+  gem.files += Dir.glob("lib/**/*.rb")
+  gem.files += Dir.glob("spec/**/*")
+  gem.test_files = Dir.glob("spec/**/*")
 
-  gem.files         = `git ls-files`.split("\n")
-  gem.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
-  gem.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   gem.require_paths = ["lib"]
 end
