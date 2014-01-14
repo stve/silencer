@@ -12,7 +12,7 @@ module Silencer
     end
 
     def silent_path?(env)
-      @silence.any? { |s| s === env['PATH_INFO'] }
+      (@routes[env['REQUEST_METHOD']] || @silence).any? { |s| s === env['PATH_INFO'] }
     end
 
   end
