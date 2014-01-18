@@ -27,7 +27,27 @@ Or if you'd prefer, you can pass it regular expressions:
 
     config.middleware.swap Rails::Rack::Logger, Silencer::Logger, :silence => [%r{^/assets/}]
 
+Or you can silence specific request methods only:
+
+
+    config.middleware.swap Rails::Rack::Logger, Silencer::Logger, :get => [%r{^/assets/}], :post => [%r{^/some_path}]
+
 Silencer's logger will serve as a drop-in replacement for Rails' default logger.  It will not suppress any logging by default, simply pass it an array of urls via the options hash.  You can also send it a 'X-SILENCE-LOGGER' header (with any value) with your request and that will also produce the same behavior.
+
+### All options
+
+Silencer supports the following configuration options.
+
+    :silence - Silences matching requests regardless of request method
+    :get     - Silences matching GET requests
+    :head    - Silences matching HEAD requests
+    :post    - Silences matching POST requests
+    :put     - Silences matching PUT requests
+    :delete  - Silences matching DELETE requests
+    :patch   - Silences matching PATCH requests
+    :trace   - Silences matching TRACE requests
+    :connect - Silences matching CONNECT requests
+    :options - Silences matching OPTIONS requests
 
 ### Rails 2.3
 
