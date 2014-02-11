@@ -1,14 +1,9 @@
-source 'http://rubygems.org'
+source 'https://rubygems.org'
 
 gem 'rake'
 gem 'yard'
 
-rails_version = case ENV['RAILS_VERSION']
-  when nil then '4.0.0'
-  else ENV['RAILS_VERSION']
-  end
-
-gem 'rails', rails_version
+gem 'rails', (ENV['RAILS_VERSION'] || '4.0.0')
 gem 'rack'
 
 group :development do
