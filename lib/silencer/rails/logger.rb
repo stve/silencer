@@ -27,7 +27,7 @@ module Silencer
           'PATCH'   => wrap(opts.delete(:patch)) + @silence,
         }
 
-        if normalized_args = normalize(args.flatten)
+        if normalized_args = normalize(args)
           super(app, normalized_args)
         else
           super(app)
