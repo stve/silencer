@@ -1,4 +1,4 @@
-# Silencer [![Build Status](https://secure.travis-ci.org/spagalloco/silencer.png?branch=master)][travis] [![Dependency Status](https://gemnasium.com/spagalloco/silencer.png?travis)][gemnasium]
+# Silencer [![Build Status](https://travis-ci.org/stve/silencer.svg?branch=master)][travis] [![Dependency Status](https://gemnasium.com/spagalloco/silencer.png?travis)][gemnasium]
 
 [travis]: http://travis-ci.org/spagalloco/silencer
 [gemnasium]: https://gemnasium.com/spagalloco/silencer
