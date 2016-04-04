@@ -35,13 +35,13 @@ module Silencer
       end
 
       def call(env)
-        old_logger_level     = ::Rails.logger.level
-        ::Rails.logger.level = ::Logger::ERROR if silence_request?(env)
-
-        super
-      ensure
-        # Return back to previous logging level
-        ::Rails.logger.level = old_logger_level
+        if silence_request?(env)
+          ::Rails.logger.silence do
+            super
+          end
+        else
+          super
+        end
       end
 
       private
