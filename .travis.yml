@@ -1,21 +1,29 @@
-bundler_args: --without development
+cache: bundler
+
 language: ruby
+
 rvm:
   - 2.0
   - 2.1
   - 2.2
+
+sudo: false
+
+bundler_args: --without development --retry=3 --jobs=3
+
+env:
+  - "RAILS_VERSION=2.3.2"
+  - "RAILS_VERSION=3.0.20"
+  - "RAILS_VERSION=3.1.12"
+  - "RAILS_VERSION=3.2.22.2"
+  - "RAILS_VERSION=4.0.13"
+  - "RAILS_VERSION=4.1.15"
+  - "RAILS_VERSION=4.2.6"
+
 matrix:
   allow_failures:
     - rvm: 2.1.0
       env: RAILS_VERSION=2.3.2
     - rvm: 2.0.0
       env: RAILS_VERSION=2.3.2
-env:
-  - "RAILS_VERSION=2.3.2"
-  - "RAILS_VERSION=3.0.20"
-  - "RAILS_VERSION=3.1.12"
-  - "RAILS_VERSION=3.2.15"
-  - "RAILS_VERSION=4.0.0"
-  - "RAILS_VERSION=4.1.10"
-  - "RAILS_VERSION=4.2.1"
-  - "RAILS_VERSION=4.2.6"
+  fast_finish: true
