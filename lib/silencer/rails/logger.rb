@@ -45,15 +45,12 @@ module Silencer
       end
 
       private
+
       def quiet(&block)
         if ::Rails.logger.respond_to?(:silence)
-          quiet_with_silence do
-            block.call
-          end
+          quiet_with_silence(&block)
         else
-          quiet_with_log_level do
-            block.call
-          end
+          quiet_with_log_level(&block)
         end
       end
 
@@ -68,6 +65,7 @@ module Silencer
       def quiet_with_log_level(&block)
         old_logger_level     = ::Rails.logger.level
         ::Rails.logger.level = ::Logger::ERROR
+
         block.call
       ensure
         # Return back to previous logging level
