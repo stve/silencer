@@ -14,7 +14,7 @@ Gem::Specification.new do |gem|
 
   gem.files = %w(.yardopts LICENSE.md README.md Rakefile silencer.gemspec)
   gem.files += Dir.glob("lib/**/*.rb")
-  gem.files += Dir.glob("spec/**/*")
+
   gem.test_files = Dir.glob("spec/**/*")
 
   gem.require_paths = ["lib"]
