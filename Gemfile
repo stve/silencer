@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 gem 'rake'
 gem 'yard'
 
-gem 'rails', (ENV['RAILS_VERSION'] || '4.0.0')
+gem 'rails', (ENV['RAILS_VERSION'] || '4.2.6')
 gem 'rack'
 
 group :development do
