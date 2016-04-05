@@ -1,6 +1,5 @@
 module Silencer
   module Hush
-
     private
 
     def silence_request?(env)
@@ -12,8 +11,16 @@ module Silencer
     end
 
     def silent_path?(env)
-      (@routes[env['REQUEST_METHOD']] || @silence).any? { |s| s === env['PATH_INFO'] }
+      (@routes[env['REQUEST_METHOD']] || @silence).any? do |rule|
+        case rule
+        when String, Integer
+          rule.to_s == env['PATH_INFO']
+        when Regexp
+          rule =~ env['PATH_INFO']
+        else
+          false
+        end
+      end
     end
-
   end
 end

@@ -1,29 +1,21 @@
 require 'rack/logger'
-require 'silencer/util'
 require 'silencer/hush'
+require 'silencer/methods'
+require 'silencer/util'
 
 module Silencer
   module Rack
     class Logger < ::Rack::Logger
-      include Silencer::Util
       include Silencer::Hush
+      include Silencer::Methods
+      include Silencer::Util
 
       def initialize(app, *args)
         opts     = extract_options!(args)
         @silence = wrap(opts.delete(:silence))
-        @routes  = {
-          'OPTIONS' => wrap(opts.delete(:options)) + @silence,
-          'GET'     => wrap(opts.delete(:get)) + @silence,
-          'HEAD'    => wrap(opts.delete(:head)) + @silence,
-          'POST'    => wrap(opts.delete(:post)) + @silence,
-          'PUT'     => wrap(opts.delete(:put)) + @silence,
-          'DELETE'  => wrap(opts.delete(:delete)) + @silence,
-          'TRACE'   => wrap(opts.delete(:trace)) + @silence,
-          'CONNECT' => wrap(opts.delete(:connect)) + @silence,
-          'PATCH'   => wrap(opts.delete(:patch)) + @silence,
-        }
+        @routes  = define_routes(@silence, opts)
 
-        super app, *args
+        super(app, *args)
       end
 
       def call(env)

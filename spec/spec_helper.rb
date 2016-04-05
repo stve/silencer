@@ -16,11 +16,11 @@ io = StringIO.new
 
 begin
   require 'rails'
-  if Rails::VERSION::MAJOR >= 4
-    ::Rails.logger = ::ActiveSupport::Logger.new(io)
-  else
-    ::Rails.logger = ::Logger.new(io)
-  end
+  ::Rails.logger = if Rails::VERSION::MAJOR >= 4
+                     ::ActiveSupport::Logger.new(io)
+                   else
+                     ::Logger.new(io)
+                   end
 rescue LoadError
   require 'activesupport'
   RAILS_ENV            = 'test'
@@ -39,5 +39,4 @@ RSpec.configure do |config|
   config.before(:each) do
     allow(::Rails.logger).to receive(:level=).with(anything)
   end
-
 end

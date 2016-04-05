@@ -12,6 +12,7 @@ end
 
 group :test do
   gem 'rspec', '3.2'
+  gem 'rubocop'
   gem 'iconv', require: false
   gem 'simplecov', require: false
 end

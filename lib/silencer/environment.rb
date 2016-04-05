@@ -1,9 +1,8 @@
 module Silencer
   module Environment
-
-    RAILS_2_3 = %r{^2.3}
-    RAILS_3_2 = %r{^3.2}
-    RAILS_4 = %r{^4}
+    RAILS_2_3 = /^2.3/
+    RAILS_3_2 = /^3.2/
+    RAILS_4 = /^4/
 
     def rails?
       defined?(::Rails)
@@ -32,6 +31,5 @@ module Silencer
 
     module_function :rails?, :rails2?, :rails_version, :rails3_2?
     module_function :rails4?, :tagged_logger?
-
   end
 end

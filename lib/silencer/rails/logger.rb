@@ -1,33 +1,31 @@
+require 'silencer/hush'
+require 'silencer/methods'
+require 'silencer/util'
+
 module Silencer
-  RailsLogger = if Silencer::Environment.rails2?
-    require 'rails/rack/log_tailer'
-    ::Rails::Rack::LogTailer
-  else
-    require 'rails/rack/logger'
-    ::Rails::Rack::Logger
+  # rubocop:disable Style/ConstantName
+  RailsLogger = begin
+    if Silencer::Environment.rails2?
+      require 'rails/rack/log_tailer'
+      ::Rails::Rack::LogTailer
+    else
+      require 'rails/rack/logger'
+      ::Rails::Rack::Logger
+    end
   end
 
   module Rails
     class Logger < RailsLogger
-      include Silencer::Util
       include Silencer::Hush
+      include Silencer::Methods
+      include Silencer::Util
 
       def initialize(app, *args)
         opts     = extract_options!(args)
         @silence = wrap(opts.delete(:silence))
-        @routes  = {
-          'OPTIONS' => wrap(opts.delete(:options)) + @silence,
-          'GET'     => wrap(opts.delete(:get)) + @silence,
-          'HEAD'    => wrap(opts.delete(:head)) + @silence,
-          'POST'    => wrap(opts.delete(:post)) + @silence,
-          'PUT'     => wrap(opts.delete(:put)) + @silence,
-          'DELETE'  => wrap(opts.delete(:delete)) + @silence,
-          'TRACE'   => wrap(opts.delete(:trace)) + @silence,
-          'CONNECT' => wrap(opts.delete(:connect)) + @silence,
-          'PATCH'   => wrap(opts.delete(:patch)) + @silence,
-        }
+        @routes  = define_routes(@silence, opts)
 
-        if normalized_args = normalize(args)
+        if normalized_args = normalize(args) # rubocop:disable Lint/AssignmentInCondition
           super(app, normalized_args)
         else
           super(app)
@@ -55,25 +53,25 @@ module Silencer
       end
 
       # This is threadsafe in Rails 4.2.6+
-      def quiet_with_silence(&block)
+      def quiet_with_silence
         ::Rails.logger.silence do
-          block.call
+          yield
         end
       end
 
       # This is not threadsafe
-      def quiet_with_log_level(&block)
+      def quiet_with_log_level
         old_logger_level     = ::Rails.logger.level
         ::Rails.logger.level = ::Logger::ERROR
 
-        block.call
+        yield
       ensure
         # Return back to previous logging level
         ::Rails.logger.level = old_logger_level
       end
 
       def normalize(args)
-        args = case args.size
+        case args.size
         when 0 then nil
         when 1 then args.shift
         else args

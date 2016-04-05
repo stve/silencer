@@ -1,6 +1,5 @@
 module Silencer
   module Util
-
     def wrap(object)
       if object.nil?
         []
@@ -20,6 +19,5 @@ module Silencer
     end
 
     module_function :wrap, :extract_options!
-
   end
 end

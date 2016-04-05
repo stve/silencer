@@ -1,11 +1,14 @@
-require 'silencer/environment'
 require 'silencer/rack/logger'
-require 'silencer/rails/logger' if Silencer::Environment.rails?
+require 'silencer/environment'
 
 module Silencer
-  Logger = if Silencer::Environment.rails?
-    Silencer::Rails::Logger
-  else
-    Silencer::Rack::Logger
+  # rubocop:disable Style/ConstantName
+  Logger = begin
+    if Silencer::Environment.rails?
+      require 'silencer/rails/logger'
+      Silencer::Rails::Logger
+    else
+      Silencer::Rack::Logger
+    end
   end
 end
