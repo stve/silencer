@@ -17,12 +17,16 @@ io = StringIO.new
 
 begin
   require 'rails'
-  ::Rails.logger = ::ActiveSupport::Logger.new(io)
+  if Rails::VERSION::MAJOR >= 4
+    ::Rails.logger = ::ActiveSupport::Logger.new(io)
+  else
+    ::Rails.logger = ::Logger.new(io)
+  end
 rescue LoadError
   require 'activesupport'
   RAILS_ENV            = 'test'
   RAILS_ROOT           = File.dirname(__FILE__)
-  RAILS_DEFAULT_LOGGER = ::ActiveSupport::Logger.new(io)
+  RAILS_DEFAULT_LOGGER = ::Logger.new(io)
   require 'initializer'
 end
 
