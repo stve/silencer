@@ -8,7 +8,6 @@ gem 'rack'
 
 group :development do
   gem 'kramdown'
-  gem 'guard-rspec'
 end
 
 group :test do
