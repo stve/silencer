@@ -11,7 +11,7 @@ group :development do
 end
 
 group :test do
-  gem 'rspec'
+  gem 'rspec', '3.2'
   gem 'iconv', require: false
   gem 'simplecov', require: false
 end
