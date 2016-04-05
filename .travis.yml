@@ -33,5 +33,6 @@ matrix:
       env: RAILS_VERSION=5.0.0.beta3
     - rvm: 2.1.0
       env: RAILS_VERSION=2.3.2
-
+    - rvm: 2.1.0
+      env: RAILS_VERSION=5.0.0.beta3
   fast_finish: true
