@@ -36,7 +36,7 @@ module Silencer
 
       def call(env)
         if silence_request?(env)
-          ::Rails.logger.silence do
+          quiet do
             super
           end
         else
@@ -45,6 +45,34 @@ module Silencer
       end
 
       private
+      def quiet(&block)
+        if ::Rails.logger.respond_to?(:silence)
+          quiet_with_silence do
+            block.call
+          end
+        else
+          quiet_with_log_level do
+            block.call
+          end
+        end
+      end
+
+      # This is threadsafe in Rails 4.2.6+
+      def quiet_with_silence(&block)
+        ::Rails.logger.silence do
+          block.call
+        end
+      end
+
+      # This is not threadsafe
+      def quiet_with_log_level(&block)
+        old_logger_level     = ::Rails.logger.level
+        ::Rails.logger.level = ::Logger::ERROR
+        block.call
+      ensure
+        # Return back to previous logging level
+        ::Rails.logger.level = old_logger_level
+      end
 
       def normalize(args)
         args = case args.size
