@@ -6,6 +6,7 @@ rvm:
   - 2.0
   - 2.1
   - 2.2
+  - 2.3
 
 sudo: false
 
@@ -19,6 +20,7 @@ env:
   - "RAILS_VERSION=4.0.13"
   - "RAILS_VERSION=4.1.15"
   - "RAILS_VERSION=4.2.6"
+  - "RAILS_VERSION=5.0.0.beta3"
 
 matrix:
   allow_failures:
