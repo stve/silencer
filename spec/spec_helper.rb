@@ -17,12 +17,12 @@ io = StringIO.new
 
 begin
   require 'rails'
-  ::Rails.logger = ::Logger.new(io)
+  ::Rails.logger = ::ActiveSupport::Logger.new(io)
 rescue LoadError
   require 'activesupport'
   RAILS_ENV            = 'test'
   RAILS_ROOT           = File.dirname(__FILE__)
-  RAILS_DEFAULT_LOGGER = ::Logger.new(io)
+  RAILS_DEFAULT_LOGGER = ::ActiveSupport::Logger.new(io)
   require 'initializer'
 end
 
