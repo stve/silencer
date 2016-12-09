@@ -53,15 +53,17 @@ describe Silencer::Rails::Logger do
       expect(response[0]).to eq(200)
     end
 
-    it 'instantiates with an optional taggers array' do
-      Silencer::Rails::Logger.new(app, log_tags, silence: ['/'])
-                             .call(Rack::MockRequest.env_for('/'))
-    end if Silencer::Environment.tagged_logger?
+    if Silencer::Environment.tagged_logger?
+      it 'instantiates with an optional taggers array' do
+        Silencer::Rails::Logger.new(app, log_tags, silence: ['/'])
+                               .call(Rack::MockRequest.env_for('/'))
+      end
 
-    it 'instantiates with an optional taggers array passed as args' do
-      Silencer::Rails::Logger.new(app, :uuid, :queue, silence: ['/'])
-                             .call(Rack::MockRequest.env_for('/'))
-    end if Silencer::Environment.tagged_logger?
+      it 'instantiates with an optional taggers array passed as args' do
+        Silencer::Rails::Logger.new(app, :uuid, :queue, silence: ['/'])
+                               .call(Rack::MockRequest.env_for('/'))
+      end
+    end
   end
 
   it 'silences' do
