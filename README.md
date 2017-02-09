@@ -21,13 +21,27 @@ Just add silencer to your Gemfile:
 
 ## Usage
 
-In your production environment (presumably):
+### Rails
+
+Create an initializer (like `config/initializers/silencer.rb`) with the contents:
 
 ```ruby
 require 'silencer/logger'
 
-config.middleware.swap Rails::Rack::Logger, Silencer::Logger, :silence => ["/noisy/action.json"]
+Rails.application.configure do
+  config.middleware.swap Rails::Rack::Logger, Silencer::Logger, :silence => ["/noisy/action.json"]
+end
 ```
+
+### Rack
+
+```ruby
+require 'silencer/logger'
+
+use Silencer::Logger, :silence => ["/noisy/action.json"]
+```
+
+## Configuration
 
 Or if you'd prefer, you can pass it regular expressions:
 
