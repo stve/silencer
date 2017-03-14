@@ -45,7 +45,7 @@ module Silencer
       private
 
       def quiet(&block)
-        if ::Rails.logger.respond_to?(:silence)
+        if ::Rails.logger.respond_to?(:silence) && ::Rails.logger.method(:silence).owner != ::Kernel
           quiet_with_silence(&block)
         else
           quiet_with_log_level(&block)
