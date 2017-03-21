@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'syslogger'
 
 describe Silencer::Rails::Logger do
   let(:app)       { ->(_env) { [200, {}, ''] } }
@@ -77,5 +78,15 @@ describe Silencer::Rails::Logger do
     end
 
     logger.call(Rack::MockRequest.env_for('/'))
+  end
+
+  context 'when logger is Syslogger' do
+    it 'does not throw error' do
+      mock_rails_logger = Syslogger.new
+      allow(::Rails).to receive(:logger) { mock_rails_logger }
+
+      logger = Silencer::Rails::Logger.new(app, silence: ['/'])
+      expect { logger.call(Rack::MockRequest.env_for('/')) }.not_to raise_error
+    end
   end
 end
