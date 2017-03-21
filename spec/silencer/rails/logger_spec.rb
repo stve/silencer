@@ -86,7 +86,7 @@ describe Silencer::Rails::Logger do
       allow(::Rails).to receive(:logger) { mock_rails_logger }
 
       logger = Silencer::Rails::Logger.new(app, silence: ['/'])
-      expect { logger.call(Rack::MockRequest.env_for('/')) }.to_not raise_error
+      expect { logger.call(Rack::MockRequest.env_for('/')) }.not_to raise_error
     end
   end
 end
