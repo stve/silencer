@@ -3,10 +3,9 @@ cache: bundler
 language: ruby
 
 rvm:
-  - 2.0
-  - 2.1
-  - 2.2.2
-  - 2.3.0
+  - 2.3.8
+  - 2.4.4
+  - 2.5.3
 
 sudo: false
 
@@ -16,23 +15,9 @@ before_install:
   - gem update bundler
 
 env:
-  - "RAILS_VERSION=2.3.2"
-  - "RAILS_VERSION=3.0.20"
-  - "RAILS_VERSION=3.1.12"
-  - "RAILS_VERSION=3.2.22.2"
-  - "RAILS_VERSION=4.0.13"
-  - "RAILS_VERSION=4.1.16"
   - "RAILS_VERSION=4.2.7"
-  - "RAILS_VERSION=5.0.0.1"
+  - "RAILS_VERSION=5.1.6"
+  - "RAILS_VERSION=5.2.2"
 
 matrix:
-  allow_failures:
-    - rvm: 2.0
-      env: RAILS_VERSION=2.3.2
-    - rvm: 2.0
-      env: RAILS_VERSION=5.0.0.1
-    - rvm: 2.1
-      env: RAILS_VERSION=2.3.2
-    - rvm: 2.1
-      env: RAILS_VERSION=5.0.0.1
   fast_finish: true
