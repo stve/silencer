@@ -10,6 +10,7 @@ module Silencer
 
     def rails_version
       return unless rails?
+
       ::Rails::VERSION::STRING
     end
 

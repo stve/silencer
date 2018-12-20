@@ -3,7 +3,7 @@ require 'syslogger'
 
 describe Silencer::Rails::Logger do
   let(:app)       { ->(_env) { [200, {}, ''] } }
-  let(:log_tags)  { [:uuid, :queue] }
+  let(:log_tags)  { %i[uuid queue] }
 
   context 'quieted' do
     before do
@@ -20,7 +20,7 @@ describe Silencer::Rails::Logger do
                              .call(Rack::MockRequest.env_for('/assets/application.css'))
     end
 
-    %w(OPTIONS GET HEAD POST PUT DELETE TRACE CONNECT PATCH).each do |method|
+    %w[OPTIONS GET HEAD POST PUT DELETE TRACE CONNECT PATCH].each do |method|
       it "quiets the log when configured with a silenced path for #{method} requests" do
         Silencer::Rails::Logger.new(app, method.downcase.to_sym => ['/'])
                                .call(Rack::MockRequest.env_for('/', method: method))

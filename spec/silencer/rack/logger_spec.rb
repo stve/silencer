@@ -17,7 +17,7 @@ describe Silencer::Rack::Logger do
                           .call(Rack::MockRequest.env_for('/assets/application.css'))
   end
 
-  %w(OPTIONS GET HEAD POST PUT DELETE TRACE CONNECT PATCH).each do |method|
+  %w[OPTIONS GET HEAD POST PUT DELETE TRACE CONNECT PATCH].each do |method|
     it "quiets the log when configured with a silenced path for #{method} requests" do
       expect_any_instance_of(::Logger).to receive(:level=).with(::Logger::ERROR)
 

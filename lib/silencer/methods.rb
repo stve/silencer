@@ -1,6 +1,6 @@
 module Silencer
   module Methods
-    METHODS = [:options, :get, :head, :post, :put, :delete, :trace, :connect, :patch]
+    METHODS = %i[options get head post put delete trace connect patch]
 
     def define_routes(silence_paths, opts)
       METHODS.each_with_object({}) do |method, routes|
