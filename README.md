@@ -29,7 +29,12 @@ Create an initializer (like `config/initializers/silencer.rb`) with the contents
 require 'silencer/logger'
 
 Rails.application.configure do
-  config.middleware.swap Rails::Rack::Logger, Silencer::Logger, :silence => ["/noisy/action.json"]
+  config.middleware.swap(
+    Rails::Rack::Logger, 
+    Silencer::Logger, 
+    config.log_tags,
+    silence: ["/noisy/action.json"]
+  )
 end
 ```
 
@@ -46,13 +51,24 @@ use Silencer::Logger, :silence => ["/noisy/action.json"]
 Or if you'd prefer, you can pass it regular expressions:
 
 ```ruby
-config.middleware.swap Rails::Rack::Logger, Silencer::Logger, :silence => [%r{^/assets/}]
+config.middleware.swap(
+  Rails::Rack::Logger, 
+  Silencer::Logger, 
+  config.log_tags, 
+  silence: [%r{^/assets/}]
+)
 ```
 
 Or you can silence specific request methods only:
 
 ```ruby
-config.middleware.swap Rails::Rack::Logger, Silencer::Logger, :get => [%r{^/assets/}], :post => [%r{^/some_path}]
+config.middleware.swap(
+  Rails::Rack::Logger, 
+  Silencer::Logger, 
+  config.log_tags, 
+  get: [%r{^/assets/}], 
+  post: [%r{^/some_path}]
+)
 ```
 
 Silencer's logger will serve as a drop-in replacement for Rails' default logger.  It will not suppress any logging by default, simply pass it an array of urls via the options hash.  You can also send it a 'X-SILENCE-LOGGER' header (with any value) with your request and that will also produce the same behavior.
@@ -71,14 +87,6 @@ Silencer supports the following configuration options.
     :trace   - Silences matching TRACE requests
     :connect - Silences matching CONNECT requests
     :options - Silences matching OPTIONS requests
-
-### Rails 2.3
-
-Rails 2.3.x introduced a tagged logging feature.  If you are using tagged logging with Rails 2.3 you can also pass taggers via the middleware:
-
-```ruby
-config.middleware.swap Rails::Rack::Logger, Silencer::Logger, config.log_tags, :silence => [%r{^/assets/}]
-```
 
 ## Note on Patches/Pull Requests
 
