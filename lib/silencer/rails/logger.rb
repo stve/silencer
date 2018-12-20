@@ -1,21 +1,11 @@
+require 'rails/rack/logger'
 require 'silencer/hush'
 require 'silencer/methods'
 require 'silencer/util'
 
 module Silencer
-  # rubocop:disable Style/ConstantName
-  RailsLogger = begin
-    if Silencer::Environment.rails2?
-      require 'rails/rack/log_tailer'
-      ::Rails::Rack::LogTailer
-    else
-      require 'rails/rack/logger'
-      ::Rails::Rack::Logger
-    end
-  end
-
   module Rails
-    class Logger < RailsLogger
+    class Logger < ::Rails::Rack::Logger
       include Silencer::Hush
       include Silencer::Methods
       include Silencer::Util
