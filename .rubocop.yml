@@ -6,6 +6,9 @@ AllCops:
     - "spec/**/*.rb"
   DisplayCopNames: true
 
+Layout/SpaceInsideHashLiteralBraces:
+  EnforcedStyle: no_space
+
 Metrics/BlockNesting:
   Max: 2
 
@@ -39,9 +42,6 @@ Style/DoubleNegation:
 
 Style/MutableConstant:
   Enabled: false
-
-Style/SpaceInsideHashLiteralBraces:
-  EnforcedStyle: no_space
 
 Style/TrailingCommaInArguments:
   EnforcedStyleForMultiline: "comma"
