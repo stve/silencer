@@ -15,7 +15,8 @@ module Silencer
         @silence = wrap(opts.delete(:silence))
         @routes  = define_routes(@silence, opts)
 
-        if normalized_args = normalize(args) # rubocop:disable Lint/AssignmentInCondition
+        normalized_args = normalize(args)
+        if normalized_args
           super(app, normalized_args)
         else
           super(app)

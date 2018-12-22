@@ -3,8 +3,8 @@ source 'https://rubygems.org'
 gem 'rake'
 gem 'yard'
 
-gem 'rails', (ENV['RAILS_VERSION'] || '5.2.2')
 gem 'rack'
+gem 'rails', (ENV['RAILS_VERSION'] || '5.2.2')
 
 group :development do
   gem 'kramdown'
