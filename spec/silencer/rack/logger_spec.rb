@@ -1,63 +1,60 @@
 require 'spec_helper'
 
 describe Silencer::Rack::Logger do
-  let(:app) { ->(_env) { [200, {}, ''] } }
+  let(:app) do
+    lambda { |env|
+      log = env['rack.logger']
+      log.info('ohai')
+
+      [200, {'Content-Type' => 'text/plain'}, ['Hello, World!']]
+    }
+  end
+
+  let(:errors) do
+    StringIO.new
+  end
 
   it 'quiets the log when configured with a silenced path' do
-    expect_any_instance_of(::Logger).to receive(:level=).with(::Logger::ERROR)
-
-    Silencer::Rack::Logger.new(app, silence: ['/'])
-                          .call(Rack::MockRequest.env_for('/'))
+    a = Rack::Lint.new(Silencer::Rack::Logger.new(app, silence: ['/']))
+    Rack::MockRequest.new(a).get('/', 'rack.errors' => errors)
+    expect(errors).not_to match('ohai')
   end
 
   it 'quiets the log when configured with a regex' do
-    expect_any_instance_of(::Logger).to receive(:level=).with(::Logger::ERROR)
-
-    Silencer::Rack::Logger.new(app, silence: [/assets/])
-                          .call(Rack::MockRequest.env_for('/assets/application.css'))
+    a = Rack::Lint.new(Silencer::Rack::Logger.new(app, silence: [/assets/]))
+    Rack::MockRequest.new(a).get('/assets/application.css', 'rack.errors' => errors)
+    expect(errors).not_to match('ohai')
   end
 
-  %w[OPTIONS GET HEAD POST PUT DELETE TRACE CONNECT PATCH].each do |method|
+  %w[OPTIONS GET POST PUT DELETE PATCH].each do |method|
     it "quiets the log when configured with a silenced path for #{method} requests" do
-      expect_any_instance_of(::Logger).to receive(:level=).with(::Logger::ERROR)
-
-      Silencer::Rack::Logger.new(app, method.downcase.to_sym => ['/'])
-                            .call(Rack::MockRequest.env_for('/', method: method))
+      a = Rack::Lint.new(Silencer::Rack::Logger.new(app, method.downcase.to_sym => ['/']))
+      Rack::MockRequest.new(a).send(method.downcase.to_sym, '/', 'rack.errors' => errors)
+      expect(errors).not_to match('ohai')
     end
 
     it "quiets the log when configured with a regex for #{method} requests" do
-      expect_any_instance_of(::Logger).to receive(:level=).with(::Logger::ERROR)
-
-      Silencer::Rack::Logger.new(app, method.downcase.to_sym => [/assets/])
-                            .call(Rack::MockRequest.env_for('/assets/application.css', method: method))
+      a = Rack::Lint.new(Silencer::Rack::Logger.new(app, method.downcase.to_sym => [/assets/]))
+      Rack::MockRequest.new(a).send(method.downcase.to_sym, '/assets/application.css', 'rack.errors' => errors)
+      expect(errors).not_to match('ohai')
     end
   end
 
-  it 'quiets the log when configured with a silenced path for non-standard requests' do
-    expect_any_instance_of(::Logger).to receive(:level=).with(::Logger::ERROR)
-
-    Silencer::Rack::Logger.new(app, silence: ['/'])
-                          .call(Rack::MockRequest.env_for('/', method: 'UPDATE'))
-  end
-
   it 'quiets the log when configured with a regex for non-standard requests' do
-    expect_any_instance_of(::Logger).to receive(:level=).with(::Logger::ERROR)
-
-    Silencer::Rack::Logger.new(app, silence: [/assets/])
-                          .call(Rack::MockRequest.env_for('/assets/application.css', method: 'UPDATE'))
+    a = Rack::Lint.new(Silencer::Rack::Logger.new(app, silence: [/assets/]))
+    Rack::MockRequest.new(a).get('/', 'rack.errors' => errors)
+    expect(errors).not_to match('ohai')
   end
 
   it 'quiets the log when passed a custom header "X-SILENCE-LOGGER"' do
-    expect_any_instance_of(::Logger).to receive(:level=).with(::Logger::ERROR)
-
-    Silencer::Rack::Logger.new(app)
-                          .call(Rack::MockRequest.env_for('/', 'HTTP_X_SILENCE_LOGGER' => 'true'))
+    a = Rack::Lint.new(Silencer::Rack::Logger.new(app))
+    Rack::MockRequest.new(a).get('/', 'rack.errors' => errors, 'HTTP_X_SILENCE_LOGGER' => 'true')
+    expect(errors).not_to match('ohai')
   end
 
   it 'does not tamper with the response' do
-    response = Silencer::Rack::Logger.new(app)
-                                     .call(Rack::MockRequest.env_for('/', 'HTTP_X_SILENCE_LOGGER' => 'true'))
-
-    expect(response[0]).to eq(200)
+    a = Rack::Lint.new(Silencer::Rack::Logger.new(app))
+    response = Rack::MockRequest.new(a).get('/', 'rack.errors' => errors, 'HTTP_X_SILENCE_LOGGER' => 'true')
+    expect(response.status).to eq(200)
   end
 end

@@ -19,11 +19,26 @@ module Silencer
       end
 
       def call(env)
-        logger       = ::Logger.new(env['rack.errors'])
-        logger.level = (silence_request?(env) ? ::Logger::ERROR : @level)
+        if silence_request?(env)
+          quiet(env) do
+            super
+          end
+        else
+          super
+        end
+      end
+
+      private
+
+      def quiet(env)
+        old_logger = env['rack.logger']
+        logger = ::Logger.new(env['rack.errors'])
+        logger.level = ::Logger::ERROR
 
         env['rack.logger'] = logger
-        @app.call(env)
+        yield
+      ensure
+        env['rack.logger'] = old_logger
       end
     end
   end

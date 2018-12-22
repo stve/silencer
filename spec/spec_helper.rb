@@ -7,6 +7,7 @@ unless ENV['CI']
 end
 
 require 'rack'
+require 'rack/lint'
 require 'rspec'
 
 require 'logger'
