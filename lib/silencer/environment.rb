@@ -6,7 +6,7 @@ module Silencer
     module_function
 
     def rails?
-      defined?(::Rails)
+      defined?(::Rails) && ::Rails.logger.present?
     end
 
     def rails_version
