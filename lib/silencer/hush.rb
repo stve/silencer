@@ -2,8 +2,8 @@ module Silencer
   module Hush
     private
 
-    def silence_request?(env)
-      (silent_header?(env) || silent_path?(env))
+    def silence_request?(env, enable_header: true)
+      ((enable_header && silent_header?(env)) || silent_path?(env))
     end
 
     def silent_header?(env)

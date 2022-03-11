@@ -15,11 +15,13 @@ module Silencer
         @silence = wrap(opts.delete(:silence))
         @routes  = define_routes(@silence, opts)
 
+        @enable_header = opts.delete(:enable_header) { true }
+
         super(app, *args)
       end
 
       def call(env)
-        if silence_request?(env)
+        if silence_request?(env, enable_header: @enable_header)
           quiet(env) do
             super
           end
