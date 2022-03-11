@@ -67,6 +67,22 @@ describe Silencer::Rails::Logger do
     end
   end
 
+  describe 'enable_header option' do
+    it 'does not quiet the log when passed a custom header "X-SILENCE-LOGGER" when enable_header option is false' do
+      expect_any_instance_of(Silencer::Rails::Logger).to_not receive(:quiet)
+
+      Silencer::Rails::Logger.new(app, enable_header: false)
+        .call(Rack::MockRequest.env_for('/', 'HTTP_X_SILENCE_LOGGER' => 'true'))
+    end
+
+    it 'quiets the log when passed a custom header "X-SILENCE-LOGGER" when enable_header option is true' do
+      expect_any_instance_of(Silencer::Rails::Logger).to receive(:quiet).once.and_call_original
+
+      Silencer::Rails::Logger.new(app, enable_header: true)
+        .call(Rack::MockRequest.env_for('/', 'HTTP_X_SILENCE_LOGGER' => 'true'))
+    end
+  end
+
   it 'silences' do
     logger = Silencer::Rails::Logger.new(app, silence: ['/'])
 

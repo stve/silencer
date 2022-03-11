@@ -77,16 +77,17 @@ Silencer's logger will serve as a drop-in replacement for Rails' default logger.
 
 Silencer supports the following configuration options.
 
-    :silence - Silences matching requests regardless of request method
-    :get     - Silences matching GET requests
-    :head    - Silences matching HEAD requests
-    :post    - Silences matching POST requests
-    :put     - Silences matching PUT requests
-    :delete  - Silences matching DELETE requests
-    :patch   - Silences matching PATCH requests
-    :trace   - Silences matching TRACE requests
-    :connect - Silences matching CONNECT requests
-    :options - Silences matching OPTIONS requests
+    :silence       - Silences matching requests regardless of request method
+    :get           - Silences matching GET requests
+    :head          - Silences matching HEAD requests
+    :post          - Silences matching POST requests
+    :put           - Silences matching PUT requests
+    :delete        - Silences matching DELETE requests
+    :patch         - Silences matching PATCH requests
+    :trace         - Silences matching TRACE requests
+    :connect       - Silences matching CONNECT requests
+    :options       - Silences matching OPTIONS requests
+    :enable_header - Enable/disable X-SILENCE-LOGGER header support (default: true)
 
 ## Note on Patches/Pull Requests
 
