@@ -2,12 +2,9 @@
 
 
 [![Gem Version](http://img.shields.io/gem/v/silencer.svg)][gem]
-[![Build Status](http://img.shields.io/travis/stve/silencer.svg)][travis]
-[![Dependency Status](http://img.shields.io/gemnasium/stve/silencer.svg)][gemnasium]
+![Tests](https://github.com/stve/silencer/actions/workflows/ci.yml/badge.svg)
 
 [gem]: https://rubygems.org/gems/silencer
-[travis]: https://travis-ci.org/stve/silencer
-[gemnasium]: https://gemnasium.com/stve/silencer
 
 Silencer is a simple rack-middleware for Rails that can selectively disable logging on per-action basis.  It's based on a [blog post](http://dennisreimann.de/blog/silencing-the-rails-log-on-a-per-action-basis/) by Dennis Reimann.
 
