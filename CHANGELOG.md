@@ -1,3 +1,10 @@
+1.1.0
+------
+
+* [Check if Rails Logger Present for environment](https://github.com/stve/silencer/commit/56a16bec3ee6fb1b1b68865453caee660af76716)
+* [Make X-SILENCE-LOGGER header optional](https://github.com/stve/silencer/commit/df3aa725bd07f731358bf1a347893bb9856444de)
+
+
 1.0.1
 ------
 
