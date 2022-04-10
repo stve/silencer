@@ -13,7 +13,7 @@ __Note__: Silencer is only threadsafe in Rails version 4.2.6 and later.
 
 Just add silencer to your Gemfile:
 
-```
+```ruby
 gem 'silencer'
 ```
 
