@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Silencer
   module Methods
     METHODS = %i[options get head post put delete trace connect patch]

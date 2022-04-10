@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails/rack/logger'
 require 'silencer/hush'
 require 'silencer/methods'
@@ -46,10 +48,8 @@ module Silencer
       end
 
       # This is threadsafe in Rails 4.2.6+
-      def quiet_with_silence
-        ::Rails.logger.silence do
-          yield
-        end
+      def quiet_with_silence(&block)
+        ::Rails.logger.silence(&block)
       end
 
       # This is not threadsafe

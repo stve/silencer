@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Silencer
   module Util
     def wrap(object)

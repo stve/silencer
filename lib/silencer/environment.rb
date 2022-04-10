@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Silencer
   module Environment
     RAILS_4 = /^4/

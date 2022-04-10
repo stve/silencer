@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 require 'syslogger'
 
@@ -23,12 +25,12 @@ describe Silencer::Rails::Logger do
     %w[OPTIONS GET HEAD POST PUT DELETE TRACE CONNECT PATCH].each do |method|
       it "quiets the log when configured with a silenced path for #{method} requests" do
         Silencer::Rails::Logger.new(app, method.downcase.to_sym => ['/'])
-                               .call(Rack::MockRequest.env_for('/', method: method))
+                               .call(Rack::MockRequest.env_for('/', method:))
       end
 
       it "quiets the log when configured with a regex for #{method} requests" do
         Silencer::Rails::Logger.new(app, method.downcase.to_sym => [/assets/])
-                               .call(Rack::MockRequest.env_for('/assets/application.css', method: method))
+                               .call(Rack::MockRequest.env_for('/assets/application.css', method:))
       end
     end
 
@@ -72,14 +74,14 @@ describe Silencer::Rails::Logger do
       expect_any_instance_of(Silencer::Rails::Logger).to_not receive(:quiet)
 
       Silencer::Rails::Logger.new(app, enable_header: false)
-        .call(Rack::MockRequest.env_for('/', 'HTTP_X_SILENCE_LOGGER' => 'true'))
+                             .call(Rack::MockRequest.env_for('/', 'HTTP_X_SILENCE_LOGGER' => 'true'))
     end
 
     it 'quiets the log when passed a custom header "X-SILENCE-LOGGER" when enable_header option is true' do
       expect_any_instance_of(Silencer::Rails::Logger).to receive(:quiet).once.and_call_original
 
       Silencer::Rails::Logger.new(app, enable_header: true)
-        .call(Rack::MockRequest.env_for('/', 'HTTP_X_SILENCE_LOGGER' => 'true'))
+                             .call(Rack::MockRequest.env_for('/', 'HTTP_X_SILENCE_LOGGER' => 'true'))
     end
   end
 
