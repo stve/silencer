@@ -1,13 +1,9 @@
 # Silencer
 
-
 [![Gem Version](http://img.shields.io/gem/v/silencer.svg)][gem]
-[![Build Status](http://img.shields.io/travis/stve/silencer.svg)][travis]
-[![Dependency Status](http://img.shields.io/gemnasium/stve/silencer.svg)][gemnasium]
+![Tests](https://github.com/stve/silencer/actions/workflows/ci.yml/badge.svg)
 
 [gem]: https://rubygems.org/gems/silencer
-[travis]: https://travis-ci.org/stve/silencer
-[gemnasium]: https://gemnasium.com/stve/silencer
 
 Silencer is a simple rack-middleware for Rails that can selectively disable logging on per-action basis.  It's based on a [blog post](http://dennisreimann.de/blog/silencing-the-rails-log-on-a-per-action-basis/) by Dennis Reimann.
 
@@ -17,7 +13,9 @@ __Note__: Silencer is only threadsafe in Rails version 4.2.6 and later.
 
 Just add silencer to your Gemfile:
 
-    gem 'silencer'
+```ruby
+gem 'silencer'
+```
 
 ## Usage
 
@@ -43,7 +41,7 @@ end
 ```ruby
 require 'silencer/logger'
 
-use Silencer::Logger, :silence => ["/noisy/action.json"]
+use Silencer::Logger, silence: ["/noisy/action.json"]
 ```
 
 ## Configuration
@@ -71,28 +69,30 @@ config.middleware.swap(
 )
 ```
 
-Silencer's logger will serve as a drop-in replacement for Rails' default logger.  It will not suppress any logging by default, simply pass it an array of urls via the options hash.  You can also send it a 'X-SILENCE-LOGGER' header (with any value) with your request and that will also produce the same behavior.
+Silencer's logger will serve as a drop-in replacement for Rails' default logger.  It will not suppress any logging by default, simply pass it an array of URLs via the options hash.  You can also send an `X-SILENCE-LOGGER` header (with any value) with your request and that will also produce the same behavior.
 
 ### All options
 
 Silencer supports the following configuration options.
 
-    :silence       - Silences matching requests regardless of request method
-    :get           - Silences matching GET requests
-    :head          - Silences matching HEAD requests
-    :post          - Silences matching POST requests
-    :put           - Silences matching PUT requests
-    :delete        - Silences matching DELETE requests
-    :patch         - Silences matching PATCH requests
-    :trace         - Silences matching TRACE requests
-    :connect       - Silences matching CONNECT requests
-    :options       - Silences matching OPTIONS requests
-    :enable_header - Enable/disable X-SILENCE-LOGGER header support (default: true)
+| Configuration | Description | Default |
+|---------------|-------------|---------|
+| `silence` | Silences matching requests regardless of request method | None |
+| `get` | Silences matching GET requests | None |
+| `head` | Silences matching HEAD requests | None |
+| `post` | Silences matching POST requests | None |
+| `put` | Silences matching PUT requests | None |
+| `delete` | Silences matching DELETE requests | None |
+| `patch` | Silences matching PATCH requests | None |
+| `trace` | Silences matching TRACE requests | None |
+| `connect` | Silences matching CONNECT requests | None |
+| `options` | Silences matching OPTIONS requests | None |
+| `enable_header` | Enable/disable X-SILENCE-LOGGER header support | `true` |
 
 ## Note on Patches/Pull Requests
 
 * Fork the project.
-* Make your feature addition or bug fix.
+* Make your feature addition or bugfix.
 * Add tests for it. This is important so I don't break it in a
   future version unintentionally.
 * Commit, do not mess with rakefile, version, or history.
@@ -101,4 +101,4 @@ Silencer supports the following configuration options.
 
 ## Copyright
 
-Copyright (c) 2012 Steve Agalloco. See [LICENSE](https://github.com/spagalloco/silencer/blob/master/LICENSE.md) for details.
+Copyright (c) 2012 Steve Agalloco. See [LICENSE](https://github.com/spagalloco/silencer/blob/main/LICENSE.md) for details.
