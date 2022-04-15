@@ -6,16 +6,18 @@ AllCops:
     - "lib/**/*.rb"
     - "spec/**/*.rb"
   DisplayCopNames: true
+  SuggestExtensions: false
+  NewCops: enable
+
+Layout/LineLength:
+  AllowURI: true
+  Enabled: false
 
 Layout/SpaceInsideHashLiteralBraces:
   EnforcedStyle: no_space
 
 Metrics/BlockNesting:
   Max: 2
-
-Metrics/LineLength:
-  AllowURI: true
-  Enabled: false
 
 Metrics/MethodLength:
   CountComments: false
