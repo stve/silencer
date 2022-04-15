@@ -2,6 +2,7 @@
 
 require 'spec_helper'
 require 'syslogger'
+require 'silencer/rails/logger'
 
 describe Silencer::Rails::Logger do
   let(:app)       { ->(_env) { [200, {}, ''] } }

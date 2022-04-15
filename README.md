@@ -14,7 +14,7 @@ __Note__: Silencer is only threadsafe in Rails version 4.2.6 and later.
 Just add silencer to your Gemfile:
 
 ```ruby
-gem 'silencer'
+gem 'silencer', require: false
 ```
 
 ## Usage
@@ -24,7 +24,7 @@ gem 'silencer'
 Create an initializer (like `config/initializers/silencer.rb`) with the contents:
 
 ```ruby
-require 'silencer/logger'
+require 'silencer/rails/logger'
 
 Rails.application.configure do
   config.middleware.swap(
@@ -39,7 +39,7 @@ end
 ### Rack
 
 ```ruby
-require 'silencer/logger'
+require 'silencer/rack/logger'
 
 use Silencer::Logger, silence: ["/noisy/action.json"]
 ```
