@@ -46,4 +46,6 @@ module Silencer
       end
     end
   end
+
+  Logger = Silencer::Rack::Logger
 end

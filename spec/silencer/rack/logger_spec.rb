@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
+require 'silencer/rack/logger'
 
 describe Silencer::Rack::Logger do
   let(:app) do

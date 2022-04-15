@@ -8,7 +8,7 @@ module Silencer
     module_function
 
     def rails?
-      defined?(::ActionDispatch)
+      defined?(::ActionDispatch) || defined?(::Rails)
     end
 
     def rails_version

@@ -4,6 +4,7 @@ require 'rails/rack/logger'
 require 'silencer/hush'
 require 'silencer/methods'
 require 'silencer/util'
+require 'silencer/rails/environment'
 
 module Silencer
   module Rails
@@ -72,4 +73,6 @@ module Silencer
       end
     end
   end
+
+  Logger = Silencer::Rails::Logger  
 end
