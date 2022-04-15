@@ -74,5 +74,5 @@ module Silencer
     end
   end
 
-  Logger = Silencer::Rails::Logger  
+  Logger = Silencer::Rails::Logger
 end
