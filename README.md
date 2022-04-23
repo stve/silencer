@@ -17,6 +17,12 @@ Just add silencer to your Gemfile:
 gem 'silencer', require: false
 ```
 
+### Upgrading to version 2.0
+
+__Note:__ 1.x versions of silencer detected the presence of Rails when it was required. This made it easy to use silencer for most applications, but made assumptions on usage.
+
+In version 2.0, you'll need to require the correct logger within your application. See the Usage documentation for more details.
+
 ## Usage
 
 ### Rails
