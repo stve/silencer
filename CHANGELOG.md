@@ -24,9 +24,11 @@
 * [remove railties as a dependency](https://github.com/stve/silencer/commit/e3226947084a26a6dc61b9c20f891cbf66c22648)
 
 0.6.0
+------
+
 * [fix HTTP header based silencer](https://github.com/stve/silencer/commit/31d54a7c718de8729eb9bd7fa982d4b4892a9a2a)
 
 0.5.0
-______
+------
 
 * [add taggers support](https://github.com/stve/silencer/commit/938dd72841728b939e9d60636425d1a10c551a83)
