@@ -1,4 +1,10 @@
-1.1.0
+2.0.0
+------
+
+* Breaking Change: [Remove implicit logger definition](https://github.com/stve/silencer/pull/35)
+
+
+1.1.0 - yanked
 ------
 
 * [Check if Rails Logger Present for environment](https://github.com/stve/silencer/commit/56a16bec3ee6fb1b1b68865453caee660af76716)
