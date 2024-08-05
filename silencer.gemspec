@@ -8,7 +8,7 @@ Gem::Specification.new do |gem|
   gem.version       = Silencer::VERSION
   gem.authors       = ["Steve Agalloco"]
   gem.email         = ["steve.agalloco@gmail.com"]
-  gem.homepage      = "http://github.com/spagalloco/silencer"
+  gem.homepage      = "https://github.com/stve/silencer"
   gem.description   = 'Selectively quiet your Rails/Rack logger on a per-route basis'
   gem.summary       = gem.description
 
