@@ -107,4 +107,4 @@ Silencer supports the following configuration options.
 
 ## Copyright
 
-Copyright (c) 2012 Steve Agalloco. See [LICENSE](https://github.com/spagalloco/silencer/blob/main/LICENSE.md) for details.
+Copyright (c) 2012 Steve Agalloco. See [LICENSE](https://github.com/stve/silencer/blob/main/LICENSE.md) for details.
