@@ -11,6 +11,7 @@ Gem::Specification.new do |gem|
   gem.homepage      = "https://github.com/stve/silencer"
   gem.description   = 'Selectively quiet your Rails/Rack logger on a per-route basis'
   gem.summary       = gem.description
+  gem.license       = 'MIT'
 
   gem.files = %w(.yardopts LICENSE.md README.md Rakefile silencer.gemspec)
   gem.files += Dir.glob("lib/**/*.rb")
